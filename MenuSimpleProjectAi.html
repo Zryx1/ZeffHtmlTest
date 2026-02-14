@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect with Me | Store</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 16px;
+            background: #0f0b1a;
+        }
+
+        /* BACKGROUND GRADIENT SUPER RINGAN */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #120c1f 0%, #1e1635 50%, #1a1230 100%);
+            z-index: -1;
+        }
+
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Profile Card - solid aja biar ringan */
+        .profile-card {
+            background: #13111c;
+            border-radius: 28px;
+            padding: 24px 20px;
+            border: 1px solid #2a2340;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ========== VIDEO ========== */
+        .video-section {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 2px solid #7c3aed;
+            position: relative;
+        }
+
+        .video-section video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.1s;
+            pointer-events: none;
+        }
+
+        .video-section:hover .video-overlay {
+            opacity: 1;
+        }
+
+        .video-overlay i {
+            color: white;
+            font-size: 2.5rem;
+        }
+
+        /* ========== PROFILE ========== */
+        .profile-photo-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .profile-photo {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #7c3aed;
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .name {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .bio {
+            color: #b9b0d4;
+            font-size: 0.95rem;
+        }
+
+        .bio i {
+            color: #7c3aed;
+            margin: 0 4px;
+        }
+
+        /* ========== NAVIGASI ========== */
+        .bottom-nav {
+            display: flex;
+            gap: 12px;
+            margin: 24px 0 20px;
+            padding: 4px;
+            background: #1e1a2b;
+            border-radius: 50px;
+            border: 1px solid #2f2842;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 14px 0;
+            text-align: center;
+            color: #b9b0d4;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.1s;
+        }
+
+        .nav-btn i {
+            font-size: 1.2rem;
+        }
+
+        .nav-btn.active {
+            background: #7c3aed;
+            color: white;
+        }
+
+        /* ========== PAGES ========== */
+        .content-page {
+            display: none;
+        }
+
+        .content-page.active {
+            display: block;
+        }
+
+        /* ========== HOME ========== */
+        .home-content {
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 24px;
+            background: #13111c;
+            border-radius: 24px;
+            border: 1px solid #2a2340;
+            text-align: center;
+        }
+
+        .welcome-text {
+            color: white;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .welcome-text i {
+            color: #7c3aed;
+            margin: 0 8px;
+        }
+
+        .home-desc {
+            color: #b9b0d4;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* ========== PRODUCTS ========== */
+        .products-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .product-card {
+            background: #13111c;
+            border: 1px solid #2a2340;
+            border-radius: 24px;
+            padding: 24px;
+            transition: all 0.1s;
+        }
+
+        .product-card:active {
+            background: #1a1728;
+        }
+
+        /* Header */
+        .product-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #2a2340;
+        }
+
+        .product-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: #1e1a2b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #7c3aed;
+        }
+
+        .product-name {
+            color: white;
+            font-weight: 700;
+            font-size: 1.6rem;
+            margin-bottom: 4px;
+        }
+
+        .product-category {
+            color: #7c3aed;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Details */
+        .product-details {
+            margin-bottom: 20px;
+        }
+
+        .product-benefit {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: #b9b0d4;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .product-benefit i {
+            color: #7c3aed;
+            font-size: 1rem;
+            margin-top: 4px;
+            min-width: 20px;
+        }
+
+        .product-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: #a294c0;
+            font-size: 0.95rem;
+            font-style: italic;
+            background: #1a1728;
+            padding: 14px;
+            border-radius: 16px;
+            border-left: 3px solid #7c3aed;
+            margin-top: 8px;
+        }
+
+        .product-note i {
+            color: #7c3aed;
+            font-size: 1rem;
+            min-width: 20px;
+        }
+
+        /* Price */
+        .product-price {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 16px 0 20px;
+            padding-top: 16px;
+            border-top: 1px solid #2a2340;
+        }
+
+        .price-label {
+            color: #a294c0;
+            font-size: 1rem;
+        }
+
+        .price-value {
+            color: #7c3aed;
+            font-weight: 700;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .price-value i {
+            font-size: 1.4rem;
+            color: #fbbf24;
+        }
+
+        /* Contact Buttons */
+        .contact-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .contact-btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            color: white;
+            transition: all 0.1s;
+            border: none;
+        }
+
+        .contact-btn:active {
+            opacity: 0.8;
+        }
+
+        .btn-wa {
+            background: #25D366;
+        }
+
+        .btn-tg {
+            background: #0088cc;
+        }
+
+        /* Scroll Hint */
+        .scroll-hint {
+            text-align: center;
+            color: #7c3aed;
+            font-size: 0.9rem;
+            margin: 20px 0;
+        }
+
+        .scroll-hint i {
+            color: #7c3aed;
+            margin: 0 8px;
+        }
+
+        /* Footer */
+        .footer {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #2a2340;
+        }
+
+        .footer-link {
+            color: #a294c0;
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.1s;
+        }
+
+        .footer-link:hover {
+            color: #7c3aed;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .profile-card {
+                padding: 20px 16px;
+            }
+
+            .product-name {
+                font-size: 1.4rem;
+            }
+
+            .price-value {
+                font-size: 1.6rem;
+            }
+
+            .product-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 1.6rem;
+            }
+
+            .nav-btn {
+                font-size: 1rem;
+                padding: 12px 0;
+            }
+        }
+
+        /* Hide video controls */
+        video::-webkit-media-controls {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- BACKGROUND GRADIENT SUPER RINGAN -->
+    <div class="bg-gradient"></div>
+
+    <div class="container">
+        <div class="profile-card">
+            <!-- VIDEO -->
+            <div class="video-section" id="videoSection">
+                <video id="profileVideo" loop muted playsinline preload="auto">
+                    <source src="https://files.catbox.moe/lwuo2r.mp4" type="video/mp4">
+                </video>
+                <div class="video-overlay">
+                    <i class="fas fa-play" id="playIcon"></i>
+                </div>
+            </div>
+
+            <!-- PROFILE PHOTO -->
+            <div class="profile-photo-wrapper">
+                <div class="profile-photo">
+                    <img src="https://raw.githubusercontent.com/Zryx1/TesHtmlZeff/refs/heads/main/IMG_20260214_125718.jpg" 
+                         alt="Profile"
+                         onerror="this.src='https://via.placeholder.com/90/7c3aed/ffffff?text=USER'">
+                </div>
+            </div>
+
+            <!-- PROFILE INFO -->
+            <div class="profile-info">
+                <h1 class="name">𝐙𝐞𝐟𝐟</h1>
+                <p class="bio">
+                    <i class="fas fa-star"></i> 
+                    𝙿𝚛𝚘𝚓𝚎𝚌𝚝 𝚉𝚎𝚏𝚏
+                    <i class="fas fa-star"></i>
+                </p>
+            </div>
+
+            <!-- HOME PAGE -->
+            <div class="content-page active" id="homePage">
+                <div class="home-content">
+                    <div class="welcome-text">
+                        <i class="fas fa-star"></i> Welcome! <i class="fas fa-star"></i>
+                    </div>
+                    <div class="home-desc">
+                        Selamat datang di store saya!<br>
+                        Klik Store untuk melihat produk.
+                    </div>
+                </div>
+            </div>
+
+            <!-- STORE PAGE -->
+            <div class="content-page" id="storePage">
+                <div class="products-grid">
+                    <!-- Product 1 -->
+                    <div class="product-card">
+                        <div class="product-header">
+                            <div class="product-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div>
+                                <div class="product-name">[Nama Produk 1]</div>
+                                <div class="product-category">[Kategori]</div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-details">
+                            <div class="product-benefit">
+                                <i class="fas fa-star"></i> [Benefit produk 1]
+                            </div>
+                            <div class="product-benefit">
+                                <i class="fas fa-star"></i> [Benefit produk 1 - lanjutan]
+                            </div>
+                            <div class="product-note">
+                                <i class="fas fa-star"></i> [Note produk 1]
+                            </div>
+                        </div>
+                        
+                        <div class="product-price">
+                            <span class="price-label">Harga</span>
+                            <span class="price-value">
+                                <i class="fas fa-star"></i> [Rp 0]
+                            </span>
+                        </div>
+
+                        <div class="contact-buttons">
+                            <a href="https://wa.me/6281234567890" target="_blank" class="contact-btn btn-wa">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                            <a href="https://t.me/username_kamu" target="_blank" class="contact-btn btn-tg">
+                                <i class="fab fa-telegram-plane"></i> Telegram
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="product-card">
+                        <div class="product-header">
+                            <div class="product-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div>
+                                <div class="product-name">[Nama Produk 2]</div>
+                                <div class="product-category">[Kategori]</div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-details">
+                            <div class="product-benefit">
+                                <i class="fas fa-star"></i> [Benefit produk 2]
+                            </div>
+                            <div class="product-benefit">
+                                <i class="fas fa-star"></i> [Benefit produk 2 - lanjutan]
+                            </div>
+                            <div class="product-note">
+                                <i class="fas fa-star"></i> [Note produk 2]
+                            </div>
+                        </div>
+                        
+                        <div class="product-price">
+                            <span class="price-label">Harga</span>
+                            <span class="price-value">
+                                <i class="fas fa-star"></i> [Rp 0]
+                            </span>
+                        </div>
+
+                        <div class="contact-buttons">
+                            <a href="https://wa.me/6281234567890" target="_blank" class="contact-btn btn-wa">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                            <a href="https://t.me/username_kamu" target="_blank" class="contact-btn btn-tg">
+                                <i class="fab fa-telegram-plane"></i> Telegram
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="product-card">
+                        <div class="product-header">
+                            <div class="product-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div>
+                                <div class="product-name">[Nama Produk 3]</div>
+                                <div class="product-category">[Kategori]</div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-details">
+                            <div class="product-benefit">
+                                <i class="fas fa-star"></i> [Benefit produk 3]
+                            </div>
+                            <div class="product-benefit">
+                                <i class="fas fa-star"></i> [Benefit produk 3 - lanjutan]
+                            </div>
+                            <div class="product-note">
+                                <i class="fas fa-star"></i> [Note produk 3]
+                            </div>
+                        </div>
+                        
+                        <div class="product-price">
+                            <span class="price-label">Harga</span>
+                            <span class="price-value">
+                                <i class="fas fa-star"></i> [Rp 0]
+                            </span>
+                        </div>
+
+                        <div class="contact-buttons">
+                            <a href="https://wa.me/6281234567890" target="_blank" class="contact-btn btn-wa">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                            <a href="https://t.me/username_kamu" target="_blank" class="contact-btn btn-tg">
+                                <i class="fab fa-telegram-plane"></i> Telegram
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 -->
+                    <div class="product-card">
+                        <div class="product-header">
+                            <div class="product-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div>
+                                <div class="product-name">[Nama Produk 4]</div>
+                                <div class="product-category">[Kategori]</div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-details">
+                            <div class="product-benefit">
+                                <i class="fas fa-star"></i> [Benefit produk 4]
+                            </div>
+                            <div class="product-benefit">
+                                <i class="fas fa-star"></i> [Benefit produk 4 - lanjutan]
+                            </div>
+                            <div class="product-note">
+                                <i class="fas fa-star"></i> [Note produk 4]
+                            </div>
+                        </div>
+                        
+                        <div class="product-price">
+                            <span class="price-label">Harga</span>
+                            <span class="price-value">
+                                <i class="fas fa-star"></i> [Rp 0]
+                            </span>
+                        </div>
+
+                        <div class="contact-buttons">
+                            <a href="https://wa.me/6281234567890" target="_blank" class="contact-btn btn-wa">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                            <a href="https://t.me/username_kamu" target="_blank" class="contact-btn btn-tg">
+                                <i class="fab fa-telegram-plane"></i> Telegram
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Product 5 -->
+                    <div class="product-card">
+                        <div class="product-header">
+                            <div class="product-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div>
+                                <div class="product-name">[Nama Produk 5]</div>
+                                <div class="product-category">[Kategori]</div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-details">
+                            <div class="product-benefit">
+                                <i class="fas fa-star"></i> [Benefit produk 5]
+                            </div>
+                            <div class="product-benefit">
+                                <i class="fas fa-star"></i> [Benefit produk 5 - lanjutan]
+                            </div>
+                            <div class="product-note">
+                                <i class="fas fa-star"></i> [Note produk 5]
+                            </div>
+                        </div>
+                        
+                        <div class="product-price">
+                            <span class="price-label">Harga</span>
+                            <span class="price-value">
+                                <i class="fas fa-star"></i> [Rp 0]
+                            </span>
+                        </div>
+
+                        <div class="contact-buttons">
+                            <a href="https://wa.me/6281234567890" target="_blank" class="contact-btn btn-wa">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                            <a href="https://t.me/username_kamu" target="_blank" class="contact-btn btn-tg">
+                                <i class="fab fa-telegram-plane"></i> Telegram
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scroll-hint">
+                    <i class="fas fa-arrow-down"></i> Scroll produk <i class="fas fa-arrow-down"></i>
+                </div>
+            </div>
+
+            <!-- BOTTOM NAVIGATION -->
+            <div class="bottom-nav">
+                <button class="nav-btn active" id="homeBtn" onclick="switchPage('home')">
+                    <i class="fas fa-home"></i> Home
+                </button>
+                <button class="nav-btn" id="storeBtn" onclick="switchPage('store')">
+                    <i class="fas fa-store"></i> Store
+                </button>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="footer">
+                <a href="#" class="footer-link">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="#" class="footer-link">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== VIDEO ==========
+        const video = document.getElementById('profileVideo');
+        const videoSection = document.getElementById('videoSection');
+        const playIcon = document.getElementById('playIcon');
+
+        video.play().catch(() => {});
+
+        videoSection.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+                playIcon.className = 'fas fa-pause';
+            } else {
+                video.pause();
+                playIcon.className = 'fas fa-play';
+            }
+        });
+
+        video.addEventListener('ended', () => {
+            playIcon.className = 'fas fa-play';
+        });
+
+        // ========== SWITCH PAGES ==========
+        function switchPage(page) {
+            document.getElementById('homeBtn').classList.remove('active');
+            document.getElementById('storeBtn').classList.remove('active');
+            document.getElementById('homePage').classList.remove('active');
+            document.getElementById('storePage').classList.remove('active');
+            
+            if (page === 'home') {
+                document.getElementById('homeBtn').classList.add('active');
+                document.getElementById('homePage').classList.add('active');
+            } else {
+                document.getElementById('storeBtn').classList.add('active');
+                document.getElementById('storePage').classList.add('active');
+            }
+        }
+
+        // ========== VIDEO ERROR ==========
+        video.addEventListener('error', () => {
+            videoSection.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#1a1a1a;color:#666;"><i class="fas fa-video-slash" style="font-size:2rem;"></i></div>';
+        });
+    </script>
+</body>
+</html>
