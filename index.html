@@ -3,14 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connect with Me | Store</title>
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <title>DeepSeek R1 Chat - Fixed</title>
     <style>
         * {
             margin: 0;
@@ -19,761 +12,516 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             min-height: 100vh;
             display: flex;
-            align-items: flex-start;
             justify-content: center;
-            padding: 16px;
-            background: #0f0b1a;
+            align-items: center;
+            padding: 20px;
         }
 
-        /* BACKGROUND GRADIENT SUPER RINGAN */
-        .bg-gradient {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .chat-container {
             width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #120c1f 0%, #1e1635 50%, #1a1230 100%);
-            z-index: -1;
+            max-width: 900px;
+            height: 90vh;
+            background: #1e293b;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
-        /* Container */
-        .container {
-            width: 100%;
-            max-width: 600px;
-            margin: 20px auto;
-            position: relative;
-            z-index: 1;
+        .chat-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 20px 24px;
+            border-bottom: 1px solid #334155;
         }
 
-        /* Profile Card - solid aja biar ringan */
-        .profile-card {
-            background: #13111c;
-            border-radius: 28px;
-            padding: 24px 20px;
-            border: 1px solid #2a2340;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        .chat-header h1 {
+            color: #38bdf8;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        /* ========== VIDEO ========== */
-        .video-section {
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: #000;
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
             border-radius: 20px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            border: 2px solid #7c3aed;
-            position: relative;
-        }
-
-        .video-section video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .video-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.1s;
-            pointer-events: none;
-        }
-
-        .video-section:hover .video-overlay {
-            opacity: 1;
-        }
-
-        .video-overlay i {
-            color: white;
-            font-size: 2.5rem;
-        }
-
-        /* ========== PROFILE ========== */
-        .profile-photo-wrapper {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 16px;
-        }
-
-        .profile-photo {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid #7c3aed;
-        }
-
-        .profile-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .profile-info {
-            text-align: center;
-            margin-bottom: 24px;
-        }
-
-        .name {
-            color: white;
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .bio {
-            color: #b9b0d4;
-            font-size: 0.95rem;
-        }
-
-        .bio i {
-            color: #7c3aed;
-            margin: 0 4px;
-        }
-
-        /* ========== NAVIGASI ========== */
-        .bottom-nav {
-            display: flex;
-            gap: 12px;
-            margin: 24px 0 20px;
-            padding: 4px;
-            background: #1e1a2b;
-            border-radius: 50px;
-            border: 1px solid #2f2842;
-        }
-
-        .nav-btn {
-            flex: 1;
-            padding: 14px 0;
-            text-align: center;
-            color: #b9b0d4;
+            font-size: 0.75rem;
             font-weight: 600;
-            font-size: 1.1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            background: transparent;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.1s;
-        }
-
-        .nav-btn i {
-            font-size: 1.2rem;
-        }
-
-        .nav-btn.active {
-            background: #7c3aed;
-            color: white;
-        }
-
-        /* ========== PAGES ========== */
-        .content-page {
-            display: none;
-        }
-
-        .content-page.active {
-            display: block;
-        }
-
-        /* ========== HOME ========== */
-        .home-content {
-            min-height: 200px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 32px 24px;
-            background: #13111c;
-            border-radius: 24px;
-            border: 1px solid #2a2340;
-            text-align: center;
-        }
-
-        .welcome-text {
-            color: white;
-            font-size: 1.6rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-
-        .welcome-text i {
-            color: #7c3aed;
-            margin: 0 8px;
-        }
-
-        .home-desc {
-            color: #b9b0d4;
-            font-size: 1rem;
-            line-height: 1.6;
-        }
-
-        /* ========== PRODUCTS ========== */
-        .products-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .product-card {
-            background: #13111c;
-            border: 1px solid #2a2340;
-            border-radius: 24px;
-            padding: 24px;
-            transition: all 0.1s;
-        }
-
-        .product-card:active {
-            background: #1a1728;
-        }
-
-        /* Header */
-        .product-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #2a2340;
-        }
-
-        .product-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
-            background: #1e1a2b;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: #7c3aed;
-        }
-
-        .product-name {
-            color: white;
-            font-weight: 700;
-            font-size: 1.6rem;
-            margin-bottom: 4px;
-        }
-
-        .product-category {
-            color: #7c3aed;
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-
-        /* Details */
-        .product-details {
-            margin-bottom: 20px;
-        }
-
-        .product-benefit {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            color: #b9b0d4;
-            font-size: 1rem;
-            line-height: 1.5;
-            margin-bottom: 12px;
-        }
-
-        .product-benefit i {
-            color: #7c3aed;
-            font-size: 1rem;
-            margin-top: 4px;
-            min-width: 20px;
-        }
-
-        .product-note {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            color: #a294c0;
-            font-size: 0.95rem;
-            font-style: italic;
-            background: #1a1728;
-            padding: 14px;
-            border-radius: 16px;
-            border-left: 3px solid #7c3aed;
             margin-top: 8px;
         }
 
-        .product-note i {
-            color: #7c3aed;
-            font-size: 1rem;
-            min-width: 20px;
+        .status-online {
+            background: #10b981;
+            color: white;
         }
 
-        /* Price */
-        .product-price {
+        .status-error {
+            background: #ef4444;
+            color: white;
+        }
+
+        .status-warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: 16px 0 20px;
-            padding-top: 16px;
-            border-top: 1px solid #2a2340;
+            flex-direction: column;
+            gap: 16px;
         }
 
-        .price-label {
-            color: #a294c0;
-            font-size: 1rem;
-        }
-
-        .price-value {
-            color: #7c3aed;
-            font-weight: 700;
-            font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .price-value i {
-            font-size: 1.4rem;
-            color: #fbbf24;
-        }
-
-        /* Contact Buttons */
-        .contact-buttons {
+        .message {
             display: flex;
             gap: 12px;
+            animation: fadeIn 0.3s ease-in;
         }
 
-        .contact-btn {
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .user-message .message-avatar {
+            background: #0ea5e9;
+        }
+
+        .assistant-message .message-avatar {
+            background: #8b5cf6;
+        }
+
+        .message-content {
             flex: 1;
-            padding: 14px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-weight: 600;
-            font-size: 1rem;
-            text-decoration: none;
+            padding: 12px 16px;
+            border-radius: 18px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        .user-message .message-content {
+            background: #0ea5e9;
             color: white;
-            transition: all 0.1s;
-            border: none;
         }
 
-        .contact-btn:active {
-            opacity: 0.8;
+        .assistant-message .message-content {
+            background: #334155;
+            color: #e2e8f0;
         }
 
-        .btn-wa {
-            background: #25D366;
+        .error-message {
+            background: #7f1d1d !important;
+            border-left: 4px solid #ef4444;
+            color: #fecaca !important;
         }
 
-        .btn-tg {
-            background: #0088cc;
+        .chat-input-area {
+            padding: 20px;
+            background: #0f172a;
+            border-top: 1px solid #334155;
         }
 
-        /* Scroll Hint */
-        .scroll-hint {
-            text-align: center;
-            color: #7c3aed;
-            font-size: 0.9rem;
-            margin: 20px 0;
-        }
-
-        .scroll-hint i {
-            color: #7c3aed;
-            margin: 0 8px;
-        }
-
-        /* Footer */
-        .footer {
+        .input-wrapper {
             display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-top: 24px;
-            padding-top: 16px;
-            border-top: 1px solid #2a2340;
+            gap: 12px;
+            align-items: flex-end;
         }
 
-        .footer-link {
-            color: #a294c0;
-            font-size: 0.95rem;
-            text-decoration: none;
+        .chat-input {
+            flex: 1;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 24px;
+            padding: 12px 20px;
+            color: #e2e8f0;
+            font-size: 1rem;
+            resize: none;
+            font-family: inherit;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: #0ea5e9;
+        }
+
+        .send-button {
+            background: #0ea5e9;
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 6px;
-            transition: color 0.1s;
+            justify-content: center;
+            transition: all 0.2s;
         }
 
-        .footer-link:hover {
-            color: #7c3aed;
+        .send-button:hover {
+            background: #0284c7;
         }
 
-        /* Responsive */
-        @media (max-width: 480px) {
-            .profile-card {
-                padding: 20px 16px;
-            }
+        .send-button:disabled {
+            background: #475569;
+            cursor: not-allowed;
+        }
 
-            .product-name {
-                font-size: 1.4rem;
-            }
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+            background: #334155;
+            border-radius: 18px;
+            width: fit-content;
+        }
 
-            .price-value {
-                font-size: 1.6rem;
-            }
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: #94a3b8;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
 
-            .product-icon {
-                width: 48px;
-                height: 48px;
-                font-size: 1.6rem;
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.4;
             }
-
-            .nav-btn {
-                font-size: 1rem;
-                padding: 12px 0;
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
             }
         }
 
-        /* Hide video controls */
-        video::-webkit-media-controls {
-            display: none !important;
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
-    <!-- BACKGROUND GRADIENT SUPER RINGAN -->
-    <div class="bg-gradient"></div>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>🤖 DeepSeek R1</h1>
+            <div>
+                <span class="status-badge" id="statusBadge">⏳ Checking API...</span>
+            </div>
+        </div>
 
-    <div class="container">
-        <div class="profile-card">
-            <!-- VIDEO -->
-            <div class="video-section" id="videoSection">
-                <video id="profileVideo" loop muted playsinline preload="auto">
-                    <source src="https://files.catbox.moe/lwuo2r.mp4" type="video/mp4">
-                </video>
-                <div class="video-overlay">
-                    <i class="fas fa-play" id="playIcon"></i>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message assistant-message">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    Halo! Saya DeepSeek R1. Silakan kirim pesan untuk memulai percakapan.
                 </div>
             </div>
+        </div>
 
-            <!-- PROFILE PHOTO -->
-            <div class="profile-photo-wrapper">
-                <div class="profile-photo">
-                    <img src="https://raw.githubusercontent.com/Zryx1/TesHtmlZeff/refs/heads/main/IMG_20260214_125718.jpg" 
-                         alt="Profile"
-                         onerror="this.src='https://via.placeholder.com/90/7c3aed/ffffff?text=USER'">
-                </div>
-            </div>
-
-            <!-- PROFILE INFO -->
-            <div class="profile-info">
-                <h1 class="name">𝐙𝐞𝐟𝐟</h1>
-                <p class="bio">
-                    <i class="fas fa-star"></i> 
-                    𝙿𝚛𝚘𝚓𝚎𝚌𝚝 𝚉𝚎𝚏𝚏
-                    <i class="fas fa-star"></i>
-                </p>
-            </div>
-
-            <!-- HOME PAGE -->
-            <div class="content-page active" id="homePage">
-                <div class="home-content">
-                    <div class="welcome-text">
-                        <i class="fas fa-star"></i> Welcome! <i class="fas fa-star"></i>
-                    </div>
-                    <div class="home-desc">
-                        Selamat datang di store saya!<br>
-                        Klik Store untuk melihat produk.
-                    </div>
-                </div>
-            </div>
-
-            <!-- STORE PAGE -->
-            <div class="content-page" id="storePage">
-                <div class="products-grid">
-                    <!-- Product 1 -->
-                    <div class="product-card">
-                        <div class="product-header">
-                            <div class="product-icon">
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <div>
-                                <div class="product-name">[Nama Produk 1]</div>
-                                <div class="product-category">[Kategori]</div>
-                            </div>
-                        </div>
-                        
-                        <div class="product-details">
-                            <div class="product-benefit">
-                                <i class="fas fa-star"></i> [Benefit produk 1]
-                            </div>
-                            <div class="product-benefit">
-                                <i class="fas fa-star"></i> [Benefit produk 1 - lanjutan]
-                            </div>
-                            <div class="product-note">
-                                <i class="fas fa-star"></i> [Note produk 1]
-                            </div>
-                        </div>
-                        
-                        <div class="product-price">
-                            <span class="price-label">Harga</span>
-                            <span class="price-value">
-                                <i class="fas fa-star"></i> [Rp 0]
-                            </span>
-                        </div>
-
-                        <div class="contact-buttons">
-                            <a href="https://wa.me/6281234567890" target="_blank" class="contact-btn btn-wa">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </a>
-                            <a href="https://t.me/username_kamu" target="_blank" class="contact-btn btn-tg">
-                                <i class="fab fa-telegram-plane"></i> Telegram
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Product 2 -->
-                    <div class="product-card">
-                        <div class="product-header">
-                            <div class="product-icon">
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <div>
-                                <div class="product-name">[Nama Produk 2]</div>
-                                <div class="product-category">[Kategori]</div>
-                            </div>
-                        </div>
-                        
-                        <div class="product-details">
-                            <div class="product-benefit">
-                                <i class="fas fa-star"></i> [Benefit produk 2]
-                            </div>
-                            <div class="product-benefit">
-                                <i class="fas fa-star"></i> [Benefit produk 2 - lanjutan]
-                            </div>
-                            <div class="product-note">
-                                <i class="fas fa-star"></i> [Note produk 2]
-                            </div>
-                        </div>
-                        
-                        <div class="product-price">
-                            <span class="price-label">Harga</span>
-                            <span class="price-value">
-                                <i class="fas fa-star"></i> [Rp 0]
-                            </span>
-                        </div>
-
-                        <div class="contact-buttons">
-                            <a href="https://wa.me/6281234567890" target="_blank" class="contact-btn btn-wa">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </a>
-                            <a href="https://t.me/username_kamu" target="_blank" class="contact-btn btn-tg">
-                                <i class="fab fa-telegram-plane"></i> Telegram
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Product 3 -->
-                    <div class="product-card">
-                        <div class="product-header">
-                            <div class="product-icon">
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <div>
-                                <div class="product-name">[Nama Produk 3]</div>
-                                <div class="product-category">[Kategori]</div>
-                            </div>
-                        </div>
-                        
-                        <div class="product-details">
-                            <div class="product-benefit">
-                                <i class="fas fa-star"></i> [Benefit produk 3]
-                            </div>
-                            <div class="product-benefit">
-                                <i class="fas fa-star"></i> [Benefit produk 3 - lanjutan]
-                            </div>
-                            <div class="product-note">
-                                <i class="fas fa-star"></i> [Note produk 3]
-                            </div>
-                        </div>
-                        
-                        <div class="product-price">
-                            <span class="price-label">Harga</span>
-                            <span class="price-value">
-                                <i class="fas fa-star"></i> [Rp 0]
-                            </span>
-                        </div>
-
-                        <div class="contact-buttons">
-                            <a href="https://wa.me/6281234567890" target="_blank" class="contact-btn btn-wa">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </a>
-                            <a href="https://t.me/username_kamu" target="_blank" class="contact-btn btn-tg">
-                                <i class="fab fa-telegram-plane"></i> Telegram
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Product 4 -->
-                    <div class="product-card">
-                        <div class="product-header">
-                            <div class="product-icon">
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <div>
-                                <div class="product-name">[Nama Produk 4]</div>
-                                <div class="product-category">[Kategori]</div>
-                            </div>
-                        </div>
-                        
-                        <div class="product-details">
-                            <div class="product-benefit">
-                                <i class="fas fa-star"></i> [Benefit produk 4]
-                            </div>
-                            <div class="product-benefit">
-                                <i class="fas fa-star"></i> [Benefit produk 4 - lanjutan]
-                            </div>
-                            <div class="product-note">
-                                <i class="fas fa-star"></i> [Note produk 4]
-                            </div>
-                        </div>
-                        
-                        <div class="product-price">
-                            <span class="price-label">Harga</span>
-                            <span class="price-value">
-                                <i class="fas fa-star"></i> [Rp 0]
-                            </span>
-                        </div>
-
-                        <div class="contact-buttons">
-                            <a href="https://wa.me/6281234567890" target="_blank" class="contact-btn btn-wa">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </a>
-                            <a href="https://t.me/username_kamu" target="_blank" class="contact-btn btn-tg">
-                                <i class="fab fa-telegram-plane"></i> Telegram
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Product 5 -->
-                    <div class="product-card">
-                        <div class="product-header">
-                            <div class="product-icon">
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <div>
-                                <div class="product-name">[Nama Produk 5]</div>
-                                <div class="product-category">[Kategori]</div>
-                            </div>
-                        </div>
-                        
-                        <div class="product-details">
-                            <div class="product-benefit">
-                                <i class="fas fa-star"></i> [Benefit produk 5]
-                            </div>
-                            <div class="product-benefit">
-                                <i class="fas fa-star"></i> [Benefit produk 5 - lanjutan]
-                            </div>
-                            <div class="product-note">
-                                <i class="fas fa-star"></i> [Note produk 5]
-                            </div>
-                        </div>
-                        
-                        <div class="product-price">
-                            <span class="price-label">Harga</span>
-                            <span class="price-value">
-                                <i class="fas fa-star"></i> [Rp 0]
-                            </span>
-                        </div>
-
-                        <div class="contact-buttons">
-                            <a href="https://wa.me/6281234567890" target="_blank" class="contact-btn btn-wa">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </a>
-                            <a href="https://t.me/username_kamu" target="_blank" class="contact-btn btn-tg">
-                                <i class="fab fa-telegram-plane"></i> Telegram
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="scroll-hint">
-                    <i class="fas fa-arrow-down"></i> Scroll produk <i class="fas fa-arrow-down"></i>
-                </div>
-            </div>
-
-            <!-- BOTTOM NAVIGATION -->
-            <div class="bottom-nav">
-                <button class="nav-btn active" id="homeBtn" onclick="switchPage('home')">
-                    <i class="fas fa-home"></i> Home
+        <div class="chat-input-area">
+            <div class="input-wrapper">
+                <textarea 
+                    class="chat-input" 
+                    id="chatInput" 
+                    placeholder="Tanyakan sesuatu... (Enter untuk kirim, Shift+Enter untuk baris baru)"
+                    rows="1"
+                ></textarea>
+                <button class="send-button" id="sendButton">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
                 </button>
-                <button class="nav-btn" id="storeBtn" onclick="switchPage('store')">
-                    <i class="fas fa-store"></i> Store
-                </button>
-            </div>
-
-            <!-- FOOTER -->
-            <div class="footer">
-                <a href="#" class="footer-link">
-                    <i class="fab fa-github"></i> GitHub
-                </a>
-                <a href="#" class="footer-link">
-                    <i class="fab fa-instagram"></i> Instagram
-                </a>
             </div>
         </div>
     </div>
 
     <script>
-        // ========== VIDEO ==========
-        const video = document.getElementById('profileVideo');
-        const videoSection = document.getElementById('videoSection');
-        const playIcon = document.getElementById('playIcon');
+        // KONFIGURASI
+        const API_KEY = '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';
+        const MODEL = 'deepseek/deepseek-r1';
+        const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
-        video.play().catch(() => {});
+        // STATE
+        let isTyping = false;
+        let apiStatus = 'checking';
 
-        videoSection.addEventListener('click', () => {
-            if (video.paused) {
-                video.play();
-                playIcon.className = 'fas fa-pause';
-            } else {
-                video.pause();
-                playIcon.className = 'fas fa-play';
-            }
-        });
-
-        video.addEventListener('ended', () => {
-            playIcon.className = 'fas fa-play';
-        });
-
-        // ========== SWITCH PAGES ==========
-        function switchPage(page) {
-            document.getElementById('homeBtn').classList.remove('active');
-            document.getElementById('storeBtn').classList.remove('active');
-            document.getElementById('homePage').classList.remove('active');
-            document.getElementById('storePage').classList.remove('active');
+        // TUNGGU DOM SIAP SEBELUM EKSEKUSI
+        document.addEventListener('DOMContentLoaded', function() {
             
-            if (page === 'home') {
-                document.getElementById('homeBtn').classList.add('active');
-                document.getElementById('homePage').classList.add('active');
-            } else {
-                document.getElementById('storeBtn').classList.add('active');
-                document.getElementById('storePage').classList.add('active');
-            }
-        }
+            // DOM Elements
+            const chatMessages = document.getElementById('chatMessages');
+            const chatInput = document.getElementById('chatInput');
+            const sendButton = document.getElementById('sendButton');
+            const statusBadge = document.getElementById('statusBadge');
 
-        // ========== VIDEO ERROR ==========
-        video.addEventListener('error', () => {
-            videoSection.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#1a1a1a;color:#666;"><i class="fas fa-video-slash" style="font-size:2rem;"></i></div>';
+            // VALIDASI ELEMEN
+            if (!chatMessages) console.error('Element #chatMessages tidak ditemukan');
+            if (!chatInput) console.error('Element #chatInput tidak ditemukan');
+            if (!sendButton) console.error('Element #sendButton tidak ditemukan');
+            if (!statusBadge) console.error('Element #statusBadge tidak ditemukan');
+
+            // CEK API KEY
+            async function checkAPIKey() {
+                if (!statusBadge) return;
+                
+                try {
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${API_KEY}`,
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            model: MODEL,
+                            messages: [{ role: 'user', content: 'test' }],
+                            max_tokens: 1
+                        })
+                    });
+
+                    if (response.status === 401) {
+                        statusBadge.className = 'status-badge status-error';
+                        statusBadge.innerHTML = '❌ API Key Invalid - Periksa API Key Anda';
+                        apiStatus = 'invalid';
+                    } else if (response.status === 402) {
+                        statusBadge.className = 'status-badge status-warning';
+                        statusBadge.innerHTML = '⚠️ Saldo Habis - Top up di OpenRouter';
+                        apiStatus = 'insufficient';
+                    } else {
+                        statusBadge.className = 'status-badge status-online';
+                        statusBadge.innerHTML = '✅ API Ready - DeepSeek R1 Siap Digunakan';
+                        apiStatus = 'ready';
+                    }
+                } catch (error) {
+                    if (statusBadge) {
+                        statusBadge.className = 'status-badge status-error';
+                        statusBadge.innerHTML = '❌ Gagal Konek - Cek Koneksi Internet';
+                    }
+                    apiStatus = 'error';
+                    console.error('API Check Error:', error);
+                }
+            }
+
+            // FUNGSI UTAMA
+            function addMessage(content, role, isError = false) {
+                if (!chatMessages) return;
+                
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${role === 'user' ? 'user-message' : 'assistant-message'}`;
+                
+                const avatar = document.createElement('div');
+                avatar.className = 'message-avatar';
+                avatar.textContent = role === 'user' ? '👤' : '🤖';
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'message-content';
+                if (isError) {
+                    contentDiv.classList.add('error-message');
+                }
+                
+                contentDiv.innerHTML = formatContent(content);
+                
+                messageDiv.appendChild(avatar);
+                messageDiv.appendChild(contentDiv);
+                
+                chatMessages.appendChild(messageDiv);
+                scrollToBottom();
+            }
+
+            function formatContent(content) {
+                let formatted = content
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>')
+                    .replace(/`([^`]+)`/g, '<code>$1</code>')
+                    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\n/g, '<br>');
+                return formatted;
+            }
+
+            function getConversationHistory() {
+                if (!chatMessages) return [];
+                
+                const messages = [];
+                const messageElements = chatMessages.querySelectorAll('.message:not(.system-message)');
+                
+                for (let i = 0; i < messageElements.length; i++) {
+                    const msgElement = messageElements[i];
+                    const role = msgElement.classList.contains('user-message') ? 'user' : 'assistant';
+                    const contentDiv = msgElement.querySelector('.message-content');
+                    
+                    if (contentDiv && !contentDiv.classList.contains('error-message')) {
+                        const content = contentDiv.innerText;
+                        messages.push({ role, content });
+                    }
+                    
+                    if (messages.length > 20) break;
+                }
+                
+                return messages;
+            }
+
+            function showTypingIndicator() {
+                if (!chatMessages) return;
+                
+                isTyping = true;
+                if (sendButton) sendButton.disabled = true;
+                
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'message assistant-message';
+                typingDiv.id = 'typingIndicator';
+                
+                const avatar = document.createElement('div');
+                avatar.className = 'message-avatar';
+                avatar.textContent = '🤖';
+                
+                const indicator = document.createElement('div');
+                indicator.className = 'typing-indicator';
+                indicator.innerHTML = '<span></span><span></span><span></span>';
+                
+                typingDiv.appendChild(avatar);
+                typingDiv.appendChild(indicator);
+                
+                chatMessages.appendChild(typingDiv);
+                scrollToBottom();
+            }
+
+            function hideTypingIndicator() {
+                isTyping = false;
+                if (sendButton) sendButton.disabled = false;
+                
+                const indicator = document.getElementById('typingIndicator');
+                if (indicator) indicator.remove();
+            }
+
+            function scrollToBottom() {
+                if (chatMessages) {
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            }
+
+            async function callAPI(userMessage) {
+                const messages = getConversationHistory();
+                messages.push({ role: 'user', content: userMessage });
+
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${API_KEY}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        model: MODEL,
+                        messages: messages,
+                        temperature: 0.7,
+                        max_tokens: 2000
+                    })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(`${response.status}: ${error.error?.message || 'Unknown error'}`);
+                }
+
+                const data = await response.json();
+                return data.choices[0].message.content;
+            }
+
+            async function sendMessage() {
+                if (!chatInput || !sendButton) return;
+                
+                if (apiStatus !== 'ready') {
+                    addMessage('⚠️ API sedang tidak siap. Tunggu hingga status online.', 'assistant', true);
+                    return;
+                }
+
+                const message = chatInput.value.trim();
+                if (!message || isTyping) return;
+
+                chatInput.value = '';
+                chatInput.style.height = 'auto';
+                
+                addMessage(message, 'user');
+                showTypingIndicator();
+
+                try {
+                    const response = await callAPI(message);
+                    hideTypingIndicator();
+                    addMessage(response, 'assistant');
+                } catch (error) {
+                    hideTypingIndicator();
+                    let errorMsg = error.message;
+                    
+                    if (errorMsg.includes('401')) {
+                        errorMsg = '❌ API Key tidak valid. Periksa kembali API Key Anda.';
+                    } else if (errorMsg.includes('402')) {
+                        errorMsg = '💰 Saldo OpenRouter Anda habis. Silakan top up di dashboard.';
+                    } else if (errorMsg.includes('429')) {
+                        errorMsg = '⏰ Terlalu banyak request. Tunggu sebentar lalu coba lagi.';
+                    } else if (errorMsg.includes('fetch')) {
+                        errorMsg = '🌐 Gagal terhubung ke server. Cek koneksi internet Anda.';
+                    }
+                    
+                    addMessage(errorMsg, 'assistant', true);
+                }
+            }
+
+            // EVENT LISTENERS
+            if (chatInput) {
+                chatInput.addEventListener('input', function() {
+                    this.style.height = 'auto';
+                    this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+                });
+
+                chatInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        sendMessage();
+                    }
+                });
+            }
+
+            if (sendButton) {
+                sendButton.addEventListener('click', sendMessage);
+            }
+
+            // START
+            checkAPIKey();
+            if (chatInput) chatInput.focus();
         });
     </script>
 </body>
